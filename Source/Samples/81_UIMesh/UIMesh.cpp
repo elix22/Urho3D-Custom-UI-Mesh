@@ -202,10 +202,22 @@ void UIMesh::SetModel(const String& modelFilename, const String& textureFilename
 
         vbuffer->Unlock();
         ibuffer->Unlock();
-
+        
         // copy working data
         workingVertexData_.Resize(vertexData_.Size());
         memcpy(&workingVertexData_[0], &vertexData_[0], vertexData_.Size() * sizeof(float));
+
+        // consolidate all batches into a single batch
+        UIBatch batch(this, blendMode_, IntRect(0, 0, 1, 1), texture_, &workingVertexData_);
+        unsigned beg = batches_[0].vertexStart_;
+        unsigned end = batches_[batches_.Size() - 1].vertexEnd_;
+        batch.vertexStart_ = beg;
+        batch.vertexEnd_ = end;
+
+        batches_.Clear();
+        batches_.Push(batch);
+
+        UpdateScissors();
 
         // set position/size if already set - call either fn, both fns adjust both
         if (position_.x_ != 0 || position_.y_ != 0 || GetSize().x_ > 1 || GetSize().y_ > 1.0f)

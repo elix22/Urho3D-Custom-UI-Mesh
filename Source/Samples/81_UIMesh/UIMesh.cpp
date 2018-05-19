@@ -39,7 +39,8 @@
 #include <Urho3D/DebugNew.h>
 //=============================================================================
 //=============================================================================
-#define CONSOLIDATE_BATCHES
+// turn it on if this actually helps
+//#define CONSOLIDATE_BATCHES
 
 //=============================================================================
 //=============================================================================
@@ -212,7 +213,8 @@ void UIMesh::SetModel(const String& modelFilename, const String& textureFilename
         memcpy(&workingVertexData_[0], &vertexData_[0], vertexData_.Size() * sizeof(float));
 
         // consolidate all batches into a single batch
-        // **NOTE**NOTE** consolidating batches into a single batch DOES NOT increase performance. Consider disabling CONSOLIDATE_BATCHES.
+        // **NOTE**NOTE** consolidating batches into a single batch DOES NOT increase performance. CONSOLIDATE_BATCHES is
+        // currently disabled. Turn it on if you just want to see less batches.
         // Profile view:
         // avg of all listed below seems better with consolidation, however
         // max GetUIBatches time increases with consolidation

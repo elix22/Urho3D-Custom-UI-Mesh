@@ -8,8 +8,8 @@ Custom UI mesh to convert mdl file format into UIBatch and render it using custo
 Only GLSL shaders supported atm. I might get around to doing HLSL later.
 
 ### Consolidating Batches
-I found that consolidating batches into a single batch DID NOT increase performance: in OPENGL, vs2015.
-I turned it off but you can define **CONSOLIDATE_BATCHES** at the top of UIMesh.cpp to enalbe it.
+I found that consolidating batches into a single batch **DID NOT** increase performance: in OPENGL, vs2015.
+I turned it off but you can uncomment the **CONSOLIDATE_BATCHES** at the top of UIMesh.cpp to enable it.
 
 ### VS2015 Release
 I had trouble getting Release build to display the UIMesh properly and discovered that disabling a compile option flags solved the issue.

@@ -9,9 +9,10 @@ Screenshot
 -----
 ![alt tag](https://github.com/Lumak/Urho3D-Custom-UI-Mesh/blob/master/screenshot/uimesh.gif)
 
-Tanks To
+Thanks To
 -----
 JTippetts for his *Diablo 3 Resource Bubble* resource. His resource is the best looking thing in this demo.
+His resource can be found here - https://github.com/JTippetts/D3ResourceBubbles
 
 Simon Schreibt for his plethora of VFX resources. The Diablo 3 Bubble and the Rime Fire VFX blog can be found at https://simonschreibt.de/
 

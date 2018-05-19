@@ -13,9 +13,10 @@ I turned it off but you can uncomment the **CONSOLIDATE_BATCHES** at the top of 
 
 ### VS2015 Release
 I had trouble getting Release build to display the UIMesh properly and discovered that changing a compile optimization option flags solved the issue.  
+
 In *C++ -> Optimization*, set:  
-**Optimization** = Custom  
-**Inline Function Expansion** = Default  
+* **Optimization** = Custom  
+* **Inline Function Expansion** = Default  
 
 Screenshot
 -----

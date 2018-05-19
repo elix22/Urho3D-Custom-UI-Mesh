@@ -12,9 +12,10 @@ I found that consolidating batches into a single batch **DID NOT** increase perf
 I turned it off but you can uncomment the **CONSOLIDATE_BATCHES** at the top of UIMesh.cpp to enable it.
 
 ### VS2015 Release
-I had trouble getting Release build to display the UIMesh properly and discovered that disabling a compile option flags solved the issue.
+I had trouble getting Release build to display the UIMesh properly and discovered that changing a compile optimization option flags solved the issue.
 In *C++ -> Optimization*, set:
-**Inline Function Expansion** = Any Suitable (/Ob2)
+**Optimization** = Custom
+**Inline Function Expansion** = Default
 
 Screenshot
 -----

@@ -4,6 +4,8 @@ Description
 -----
 Custom UI mesh to convert mdl file format into UIBatch and render it using custom shaders in UI render cycle.
 
+### Note
+Only GLSL shaders supported atm. I might get around to doing HLSL later.
 
 Screenshot
 -----

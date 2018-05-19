@@ -11,12 +11,9 @@ Only GLSL shaders supported atm. I might get around to doing HLSL later.
 I found that consolidating batches into a single batch **DID NOT** increase performance: in OPENGL, vs2015.
 I turned it off but you can uncomment the **CONSOLIDATE_BATCHES** at the top of UIMesh.cpp to enable it.
 
-### VS2015 Release
-I had trouble getting Release build to display the UIMesh properly and discovered that changing a compile optimization option flags solved the issue.  
-
-In *C++ -> Optimization*, set:  
-* **Optimization** = Custom  
-* **Inline Function Expansion** = Default  
+### VS2015 Release -- Resolved
+I had trouble getting Release build to display the UIMesh properly. Resolved by adding compiler option for \_WIN32 in UIMesh.cpp.  
+You don't have to touch any compiler options and shouldn't have any issues. But, let me know if you do.
 
 Screenshot
 -----

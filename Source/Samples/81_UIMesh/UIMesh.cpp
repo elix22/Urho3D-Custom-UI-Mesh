@@ -89,6 +89,10 @@ void UIMesh::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDat
     }
 }
 
+#ifdef _WIN32
+#pragma optimize("", off)
+#endif
+
 void UIMesh::SetModel(const String& modelFilename, const String& textureFilename)
 {
     ResourceCache* cache = GetSubsystem<ResourceCache>();
@@ -241,6 +245,10 @@ void UIMesh::SetModel(const String& modelFilename, const String& textureFilename
         }
     }
 }
+
+#ifdef _WIN32
+#pragma optimize("", on)
+#endif
 
 void UIMesh::SetMaterial(const String &matrialFilename)
 {

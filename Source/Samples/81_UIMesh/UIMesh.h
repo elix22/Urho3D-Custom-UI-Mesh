@@ -71,7 +71,8 @@ protected:
     void UpdateMaterialShader(Graphics* graphics);
     void UpdateScissors();
     void UpdateBlendMode();
-    void UpdateScrollUV();
+    void UpdateBubble(float timeStep);
+    void UpdateScrollUV(float timeStep);
     void UpdateFixedUV();
 
 protected:

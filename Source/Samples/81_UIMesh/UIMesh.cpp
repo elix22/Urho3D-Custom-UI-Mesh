@@ -253,26 +253,9 @@ void UIMesh::SetMaterial(const String &matrialFilename)
 
 void UIMesh::Update(float timeStep)
 {
-    if (bubbleEffect_ && material_)
-    {
-        level_ = level_ + 0.05f * timeStep * dir_;
+    UpdateBubble(timeStep);
 
-        if (level_ > 1.0f)
-        {
-            dir_ = -1.0f;
-        }
-        else if (level_ < 0.0f)
-        {
-            dir_ = 1.0f;
-        }
-
-        material_->SetShaderParameter("Level", level_);
-    }
-
-    if (scrollUV_)
-    {
-        UpdateScrollUV();
-    }
+    UpdateScrollUV(timeStep);
 
     UpdateFixedUV();
 }
@@ -464,12 +447,34 @@ void UIMesh::UpdateBlendMode()
     }
 }
 
-void UIMesh::UpdateScrollUV()
+void UIMesh::UpdateBubble(float timeStep)
 {
-    for (unsigned i = 0; i < workingVertexData_.Size(); i += UI_VERTEX_SIZE)
+    if (bubbleEffect_ && material_)
     {
-        workingVertexData_[i + 4] += scrollRate_.x_;
-        workingVertexData_[i + 5] += scrollRate_.y_;
+        level_ = level_ + 0.05f * timeStep * dir_;
+
+        if (level_ > 1.0f)
+        {
+            dir_ = -1.0f;
+        }
+        else if (level_ < 0.0f)
+        {
+            dir_ = 1.0f;
+        }
+
+        material_->SetShaderParameter("Level", level_);
+    }
+}
+
+void UIMesh::UpdateScrollUV(float timeStep)
+{
+    if (scrollUV_)
+    {
+        for (unsigned i = 0; i < workingVertexData_.Size(); i += UI_VERTEX_SIZE)
+        {
+            workingVertexData_[i + 4] += scrollRate_.x_ * timeStep;
+            workingVertexData_[i + 5] += scrollRate_.y_ * timeStep;
+        }
     }
 }
 

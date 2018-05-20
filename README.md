@@ -8,8 +8,7 @@ Custom UI mesh to convert mdl file format into UIBatch and render it using custo
 Only GLSL shaders supported atm. I might get around to doing HLSL later.
 
 ### VS2015 Release -- Resolved
-I had trouble getting Release build to display the UIMesh properly. Resolved by adding optimization pragma for \_WIN32 in UIMesh.cpp.  
-You don't have to touch any compiler options and shouldn't have any issues. But, let me know if you do.
+I had trouble getting Release build to display the UIMesh properly. Resolved by adding optimization pragma for \_WIN32 in UIMesh.cpp. You don't have to touch any compiler options and shouldn't have any issues. But, let me know if you do.
 
 Screenshot
 -----

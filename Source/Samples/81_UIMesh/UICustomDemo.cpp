@@ -107,14 +107,14 @@ void UICustomDemo::CreateUIMesh()
     uiMesh->SetModel("Models/uiWheel2.mdl", "Textures/uiWheelcolHalfVert.png");
     uiMesh->SetSize(200, 200);
     uiMesh->SetPosition(IntVector2(100, 290));
-    uiMesh->SetScrollUV(true, Vector2(0.002f, 0.0f));
+    uiMesh->SetScrollUV(true, Vector2(0.4f, 0.0f));
     uiRoot->AddChild(uiMesh);
 
     uiMesh = new UIMesh(context_);
     uiMesh->SetModel("Models/uiWheel1.mdl", "Textures/colorCloud.png");
     uiMesh->SetSize(200, 200);
     uiMesh->SetPosition(IntVector2(350, 290));
-    uiMesh->SetScrollUV(true, Vector2(0.003f, -0.004f));
+    uiMesh->SetScrollUV(true, Vector2(0.6f, -0.8f));
     uiRoot->AddChild(uiMesh);
 
     uiMesh = new UIMesh(context_);

@@ -113,6 +113,7 @@ void UIMesh::SetModel(const String& modelFilename, const String& textureFilename
     unsigned elementMask = vbuffer->GetElementMask();
     Vector3 fullSize = model->GetBoundingBox().Size();
     Vector3 halfSize = model->GetBoundingBox().HalfSize();
+    float unitScaleFactor = fullSize.x_>fullSize.y_?1.0f/fullSize.x_:1.0f/fullSize.z_;
 
     // minimum requirement
     assert((elementMask & (MASK_POSITION | MASK_TEXCOORD1)) == (MASK_POSITION | MASK_TEXCOORD1));
@@ -150,8 +151,8 @@ void UIMesh::SetModel(const String& modelFilename, const String& textureFilename
 
                 //**NOTE** the z(y) component is reversed due to the negative y-scaling (-2.0f * invScreenSize.y_ in Render() fn.)
                 // - move verts to positive space and unitize
-                v0.x_ = ( v0.x_ + halfSize.x_)/fullSize.x_;
-                v0.z_ = (-v0.z_ + halfSize.z_)/fullSize.z_;
+                v0.x_ = ( v0.x_ + halfSize.x_) * unitScaleFactor;
+                v0.z_ = (-v0.z_ + halfSize.z_) * unitScaleFactor;
 
                 dataAlign += sizeof(Vector3);
 

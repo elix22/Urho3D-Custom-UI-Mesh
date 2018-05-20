@@ -35,12 +35,13 @@ void PS()
 
     vec2 texCoordA = vTexCoord * 0.5 + cElapsedTimePS * cSpeedA;
     vec2 texCoordB = vTexCoord * 1.5 + cElapsedTimePS * cSpeedB;
-    vec4 noiseMask1 = texture2D(sEmissiveMap, texCoordA);
-    vec4 noiseMask2 = texture2D(sEmissiveMap, texCoordB);
-    vec4 combMask = noiseMask1 * noiseMask2 * 2.0;
+    float noiseMask1 = texture2D(sEmissiveMap, texCoordA).r;
+    float noiseMask2 = texture2D(sEmissiveMap, texCoordB).r;
+    float combMask = noiseMask1 * noiseMask2 * 2.0;
 
-    vec4 specColor = texture2D(sSpecMap, vTexCoord);
-    vec4 diffColor = combMask * (cMatDiffColor + vec4(1.0, 1.0, 1.0, 1.0) * specColor.a * 2.0);
+    vec4 specColor = cMatSpecColor * texture2D(sSpecMap, vTexCoord);
+    specColor *= specColor.a;
+    vec4 diffColor = combMask * (cMatDiffColor + specColor);
 
     #ifdef ALPHAMASK // not used
         if (diffColor.a < 0.5)

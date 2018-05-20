@@ -39,11 +39,6 @@
 #include <Urho3D/DebugNew.h>
 //=============================================================================
 //=============================================================================
-// turn it on if this actually helps
-//#define CONSOLIDATE_BATCHES
-
-//=============================================================================
-//=============================================================================
 UIMesh::UIMesh(Context* context)
     : UIElement(context)
     , blendMode_(BLEND_REPLACE)
@@ -76,9 +71,17 @@ void UIMesh::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDat
         batch.vertexStart_ = vertexData.Size();
         batch.vertexEnd_   = vertexData.Size() + (end - beg);
 
-        // resize and copy
         vertexData.Resize(batch.vertexEnd_);
-        memcpy(&vertexData[batch.vertexStart_], &workingVertexData_[beg], (end - beg) * sizeof(float));
+
+        for (unsigned j = 0; j < (end - beg)/UI_VERTEX_SIZE; ++j)
+        {
+            vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 0] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 0];
+            vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 1] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 1];
+            vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 2] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 2];
+            vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 3] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 3];
+            vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 4] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 4];
+            vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 5] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 5];
+        }
 
         // store
         batches.Push(batch);
@@ -217,15 +220,6 @@ void UIMesh::SetModel(const String& modelFilename, const String& textureFilename
         memcpy(&workingVertexData_[0], &vertexData_[0], vertexData_.Size() * sizeof(float));
 
         // consolidate all batches into a single batch
-        // **NOTE**NOTE** consolidating batches into a single batch DOES NOT increase performance. CONSOLIDATE_BATCHES is
-        // currently disabled. Turn it on if you just want to see less batches.
-        // Profile view:
-        // avg of all listed below seems better with consolidation, however
-        // max GetUIBatches time increases with consolidation
-        // max Render timer "
-        // max RenderUI timer "
-        // this results in fluctuations which causes drop in a few frames, 4-5 from what I observed.
-        #ifdef CONSOLIDATE_BATCHES
         UIBatch batch(this, blendMode_, IntRect(0, 0, 1, 1), texture_, &workingVertexData_);
         unsigned beg = batches_[0].vertexStart_;
         unsigned end = batches_[batches_.Size() - 1].vertexEnd_;
@@ -236,7 +230,6 @@ void UIMesh::SetModel(const String& modelFilename, const String& textureFilename
         batches_.Push(batch);
 
         UpdateScissors();
-        #endif
 
         // set position/size if already set - call either fn, both fns adjust both
         if (position_.x_ != 0 || position_.y_ != 0 || GetSize().x_ > 1 || GetSize().y_ > 1.0f)

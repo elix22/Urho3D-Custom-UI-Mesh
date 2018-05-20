@@ -38,9 +38,9 @@ void PS()
 
     vec4 diffColor0 = texture2D(sDiffMap, texCoordA + diffMask1.rg * 0.4);
     vec4 diffColor1 = texture2D(sDiffMap, texCoordB + diffMask1.rg * 0.4);
-    vec4 diffColor = cMatDiffColor * diffColor0 + diffColor1;
+    vec4 diffColor = cMatDiffColor * (diffColor0 + diffColor1);
 
-    diffColor *= diffMask1 * diffMask2 * diffMask3 * 4.0;
+    diffColor *= diffMask1.r * diffMask2.r * diffMask3.r * 4.0;
 
     gl_FragColor = diffColor;
 }

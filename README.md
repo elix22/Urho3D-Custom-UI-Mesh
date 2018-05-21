@@ -34,7 +34,7 @@ Simon Schreibt for his plethora of VFX resources. The Diablo 3 Bubble and the Ri
 To Build
 -----
 To build it, unzip/drop the repository into your Urho3D/ folder and build it the same way as you'd build the default Samples that come with Urho3D.
-**Built with Urho3D 1.7 tag.**
+**Built with latest Urho3D master branch**
 
 License
 -----

@@ -62,6 +62,16 @@ void UIMesh::RegisterObject(Context* context)
 
 void UIMesh::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexData, const IntRect& currentScissor)
 {
+    const IntVector2& screenPos = GetScreenPosition();
+    IntVector2 intDeltaPos;
+    Vector2 deltaPos;
+
+    if (screenPos != position_)
+    {
+        intDeltaPos = screenPos - position_;
+        deltaPos = Vector2(intDeltaPos);
+    }
+
     for (unsigned i = 0; i < batches_.Size(); ++i)
     {
         // get batch
@@ -75,13 +85,21 @@ void UIMesh::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDat
 
         for (unsigned j = 0; j < (end - beg)/UI_VERTEX_SIZE; ++j)
         {
-            vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 0] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 0];
-            vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 1] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 1];
+            vertexData[batch.vertexStart_ + j * UI_VERTEX_SIZE + 0] = workingVertexData_[beg + j * UI_VERTEX_SIZE + 0] + deltaPos.x_;
+            vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 1] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 1] + deltaPos.y_;
+
             vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 2] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 2];
             vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 3] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 3];
             vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 4] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 4];
             vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 5] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 5];
         }
+
+        // delta
+        IntRect saveScissor = batch.scissor_;
+        batch.scissor_.left_   += intDeltaPos.x_;
+        batch.scissor_.top_    += intDeltaPos.y_;
+        batch.scissor_.right_  += intDeltaPos.x_;
+        batch.scissor_.bottom_ += intDeltaPos.y_;
 
         // store
         batches.Push(batch);
@@ -89,6 +107,7 @@ void UIMesh::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDat
         // restore
         batch.vertexStart_ = beg;
         batch.vertexEnd_   = end;
+        batch.scissor_     = saveScissor;
     }
 }
 

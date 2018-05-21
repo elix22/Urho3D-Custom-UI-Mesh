@@ -85,7 +85,7 @@ void UIMesh::GetBatches(PODVector<UIBatch>& batches, PODVector<float>& vertexDat
 
         for (unsigned j = 0; j < (end - beg)/UI_VERTEX_SIZE; ++j)
         {
-            vertexData[batch.vertexStart_ + j * UI_VERTEX_SIZE + 0] = workingVertexData_[beg + j * UI_VERTEX_SIZE + 0] + deltaPos.x_;
+            vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 0] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 0] + deltaPos.x_;
             vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 1] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 1] + deltaPos.y_;
 
             vertexData[batch.vertexStart_ + j*UI_VERTEX_SIZE + 2] = workingVertexData_[beg + j*UI_VERTEX_SIZE + 2];

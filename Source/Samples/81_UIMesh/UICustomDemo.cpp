@@ -85,14 +85,16 @@ void UICustomDemo::CreateUIMesh()
     uiMesh->SetPosition(IntVector2(350, 40));
     uiRoot->AddChild(uiMesh);
 
+    // parenting offset test
+    UIElement *uie = uiRoot->CreateChild<UIElement>();
+    uie->SetSize(200, 200);
+    uie->SetPosition(600, 40);
     uiMesh = new UIMesh(context_);
     uiMesh->SetModel("Models/Plane.mdl");
     uiMesh->SetMaterial("Materials/UIFire.xml");
     uiMesh->SetBlendMode(BLEND_ADDALPHA);
     uiMesh->SetSize(200, 200);
-    uiMesh->SetPosition(IntVector2(600, 40));
-    uiMesh->SetPriority(1);
-    uiRoot->AddChild(uiMesh);
+    uie->AddChild(uiMesh);
 
     uiMesh = new UIMesh(context_);
     uiMesh->SetModel("Models/Plane.mdl");
